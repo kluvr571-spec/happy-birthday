@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💜</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #eee5ff, #ffffff, #e6d6ff);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #65418a;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -30px;
+    color: #b99add;
+    font-size: 22px;
+    animation: float 9s linear infinite;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { left: 30%; animation-delay: 3s; }
+.heart:nth-child(3) { left: 70%; animation-delay: 1s; }
+.heart:nth-child(4) { left: 90%; animation-delay: 5s; }
+
+@keyframes float {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+    }
+}
+
+/* Main container */
+.container {
+    width: 90%;
+    max-width: 430px;
+    background: rgba(255,255,255,0.9);
+    padding: 35px 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(110,70,150,0.15);
+    border: 1px solid #e6d6fa;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 30px;
+    color: #8055ad;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #9981b4;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d5c0ed;
+    border-radius: 12px;
+    outline: none;
+    text-align: center;
+    font-size: 16px;
+    color: #65418a;
+    background: #fcfaff;
+    margin-bottom: 15px;
+}
+
+input:focus {
+    border-color: #9869c5;
+}
+
+button {
+    background: #9469bd;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #754a9e;
+    transform: scale(1.04);
+}
+
+/* Screen transitions */
+.screen {
+    display: none;
+    animation: appear 0.8s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Envelope */
+.envelope-area {
+    margin: 35px auto;
+    width: 220px;
+    height: 150px;
+    position: relative;
+    cursor: pointer;
+    perspective: 800px;
+}
+
+.envelope {
+    width: 100%;
+    height: 100%;
+    background: #cbb1e9;
+    position: absolute;
+    bottom: 0;
+    border-radius: 5px;
+    box-shadow: 0 8px 20px rgba(100,60,140,0.15);
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-top: 85px solid #a982d0;
+    transform-origin: top;
+    transition: transform 0.8s;
+    z-index: 3;
+}
+
+.envelope::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 110px solid #dfcff2;
+    border-right: 110px solid #dfcff2;
+    border-top: 75px solid transparent;
+    border-bottom: 75px solid #b895db;
+    z-index: 2;
+}
+
+.seal {
+    position: absolute;
+    top: 60px;
+    left: 91px;
+    font-size: 35px;
+    z-index: 4;
+    transition: opacity 0.3s;
+}
+
+.envelope.open::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope.open .seal {
+    opacity: 0;
+}
+
+.letter-hint {
+    color: #9b7cba;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Letter */
+.letter {
+    display: none;
+    background: #fffaff;
+    border: 1px solid #e5d5f3;
+    border-radius: 15px;
+    padding: 25px 20px;
+    margin-top: 20px;
+    text-align: left;
+    animation: appear 1s ease;
+    line-height: 1.8;
+    box-shadow: 0 5px 15px rgba(100,60,140,0.08);
+}
+
+.letter h2 {
+    text-align: center;
+    color: #8656ac;
+    margin-bottom: 18px;
+    font-size: 23px;
+}
+
+.letter p {
+    font-size: 15px;
+    color: #735d85;
+    margin-bottom: 13px;
+}
+
+.signature {
+    text-align: right;
+    color: #9569bd;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.letter.show {
+    display: block;
+}
+
+.back-btn {
+    margin-top: 20px;
+    background: #b69ad5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="heart">♡</div>
+<div class="heart">💜</div>
+<div class="heart">♡</div>
+<div class="heart">💜</div>
+
+<div class="container">
+
+    <!-- FIRST SCREEN -->
+    <div class="screen active" id="welcome">
+
+        <div style="font-size:50px; margin-bottom:15px;">💜</div>
+
+        <h1>A Little Surprise</h1>
+
+        <p class="subtitle">
+            Someone special has a birthday today!<br>
+            But first, may I know your name?
+        </p>
+
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter your name here..."
+            autocomplete="off"
+        >
+
+        <br>
+
+        <button onclick="enterName()">
+            Continue ♡
+        </button>
+
+    </div>
+
+    <!-- SECOND SCREEN -->
+    <div class="screen" id="envelopeScreen">
+
+        <h1>Happy Birthday! 🎂</h1>
+
+        <p class="subtitle">
+            This little letter is specially made for you,
+            <span id="herName"></span>. ♡
+        </p>
+
+        <div class="envelope-area" onclick="openLetter()">
+
+            <div class="envelope" id="envelope">
+                <div class="seal">💜</div>
+            </div>
+
+        </div>
+
+        <p class="letter-hint" id="hint">
+            Tap the envelope to open your letter ♡
+        </p>
+
+        <!-- LETTER MESSAGE -->
+        <div class="letter" id="letter">
+
+            <h2>To You, With Love ♡</h2>
+
+            <p>Dear <span id="letterName"></span>,</p>
+
+            <p>
+                Happy Birthday! 💜 I hope your special day
+                is filled with happiness, laughter, and
+                beautiful moments that you will always remember.
+            </p>
+
+            <p>
+                I hope life gives you more reasons to smile,
+                more opportunities to grow, and more beautiful
+                memories to keep. You deserve all the good
+                things that this world has to offer.
+            </p>
+
+            <p>
+                Always remember how special you are.
+                Never stop being yourself, and keep shining
+                in your own little way.
+            </p>
+
+            <p>
+                I hope this new chapter of your life brings
+                you everything your heart has been wishing for.
+                Enjoy your day and make the most of it!
+            </p>
+
+            <p>
+                Once again, happiest birthday to you! 🎂
+            </p>
+
+            <div class="signature">
+                With love, ♡
+            </div>
+
+        </div>
+
+        <button class="back-btn" onclick="goBack()">
+            Back ♡
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function enterName() {
+
+    let name = document.getElementById("nameInput").value.trim();
+
+    if (name === "") {
+        alert("Please enter your name first! 💜");
+        return;
+    }
+
+    document.getElementById("herName").textContent = name;
+    document.getElementById("letterName").textContent = name;
+
+    document.getElementById("welcome").classList.remove("active");
+    document.getElementById("envelopeScreen").classList.add("active");
+}
+
+function openLetter() {
+
+    let envelope = document.getElementById("envelope");
+    let letter = document.getElementById("letter");
+    let hint = document.getElementById("hint");
+
+    if (!envelope.classList.contains("open")) {
+
+        envelope.classList.add("open");
+
+        hint.textContent = "Opening your little surprise... 💜";
+
+        setTimeout(function() {
+            letter.classList.add("show");
+            hint.textContent = "A little message just for you ♡";
+        }, 800);
+
+    }
+
+}
+
+function goBack() {
+
+    document.getElementById("envelope").classList.remove("open");
+    document.getElementById("letter").classList.remove("show");
+
+    document.getElementById("hint").textContent =
+        "Tap the envelope to open your letter ♡";
+
+    document.getElementById("envelopeScreen").classList.remove("active");
+    document.getElementById("welcome").classList.add("active");
+
+}
+
+</script>
+
+</body>
+</html>
